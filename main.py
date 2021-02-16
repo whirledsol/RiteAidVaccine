@@ -1,15 +1,7 @@
-BENSONHURST = '11204'
-JERSEY_CITY = '07302'
-MORRISTOWN = '07960'
-
 import json
 import requests
 import argparse
 from rite_aid import zip_search, stores
-
-# BENSONHURST = '11204'
-# JERSEY_CITY = '07302'
-# MORRISTOWN = '07960'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("zip_code", help="currently supported zips: 11204, 07302, 07960")
