@@ -27,7 +27,11 @@ def check_appointments(zip_code:str, shot_number:int = 1) -> list:
             requests.get(BASE_URL.format(store_num = store)).content
         )['Data']['slots'][str(shot_number)] for store in stores 
     }
-    
+
 if __name__ == '__main__':
-    result = check_appointments(zip_code=args.zip_code, shot_number=args.shot)
-    print(result)
+    results = check_appointments(zip_code=args.zip_code, shot_number=args.shot)
+    for store in results:
+        if results[store]:
+            print(f"Availability at Rite Aid #{store}")
+            print(f"Address:\t{stores[store]['address']}")
+            print(f"Phone #:\t{stores[store]['phone_number']}")
