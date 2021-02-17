@@ -1,5 +1,5 @@
 import json
-import requests
+import urllib3
 import argparse
 from rite_aid import zip_search, stores
 
@@ -9,16 +9,17 @@ parser.add_argument("--shot", help="shot number to check availability for", defa
 args = parser.parse_args()
 
 def check_appointments(zip_code:str, shot_number:int = 1) -> list:
-    stores = zip_search[zip_code]
-    BASE_URL = "https://www.riteaid.com/services/ext/v2/vaccine/checkSlots?storeNumber={store_num}"
-    
-    availabilities = list()
+    with urllib3.PoolManager() as http:
+        stores = zip_search[zip_code]
+        BASE_URL = "https://www.riteaid.com/services/ext/v2/vaccine/checkSlots?storeNumber={store_num}"
+        
+        availabilities = list()
 
-    return {
-        store : json.loads(
-            requests.get(BASE_URL.format(store_num = store)).content
-        )['Data']['slots'][str(shot_number)] for store in stores 
-    }
+        return {
+            store : json.loads(
+                http.request('GET', BASE_URL.format(store_num = store), headers={'User-Agent': 'Mozilla/5.0'}).data
+            )['Data']['slots'][str(shot_number)] for store in stores 
+        }
 
 if __name__ == '__main__':
     results = check_appointments(zip_code=args.zip_code, shot_number=args.shot)
