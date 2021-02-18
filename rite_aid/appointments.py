@@ -1,16 +1,13 @@
 import json
 import urllib3
 
-def check_appointments(zip_code:str, shot_number:int = 1) -> list:
+def check_appointments(zip_code:str, shot_number:int = 1) -> dict:
     zip_search = {
         "11204": [
             3766, 10577, 10579, 10575, 10574, 4246, 4679, 4876, 4257, 3869
         ],
-        "07302": [
-            1661, 4812
-        ],
         "07960": [
-            10435, 219
+            10435, 219, 994, 1977, 3697, 10402, 4746, 1736, 4509, 4821
         ]
     }
 
