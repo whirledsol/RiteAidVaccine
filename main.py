@@ -1,4 +1,5 @@
 import os
+import datetime
 from rite_aid.appointments import check_appointments
 from rite_aid.messenger import Messenger
 import argparse
@@ -13,7 +14,10 @@ args = parser.parse_args()
 if __name__ == "__main__":
     results = check_appointments(zip_code=args.zip_code, shot_number=args.shot)
     messenger = Messenger()
+    print(f"\nStarting Run: {datetime.datetime.now()}\n")
     for store in results:
         if results[store]:
+            print(f"\t#{store}: AVAILABLE")
             messenger.notify_availability(store)
-            break
+        else:
+            print(f"\t#{store}: No Availabilities")
