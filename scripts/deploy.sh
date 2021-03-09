@@ -1,0 +1,1 @@
+scp -r ~/projects/RiteAidVaccine/src pi@peachpie:~/projects/RiteAidVaccine/src

@@ -29,5 +29,5 @@ class Messenger:
         self.client.api.account.messages.create(
             to=self.recipient,
             from_=self.sender,
-            body=f"COVID Vaccine Available at Rite Aid {store_info}."
+            body=f"COVID Vaccine Available @ Rite Aid {store_info}: https://bit.ly/3v7H46b"
         )
