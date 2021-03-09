@@ -4,22 +4,34 @@ import json
 from rite_aid.appointments import check_appointments
 from rite_aid.messenger import Messenger
 import argparse
-from dotenv import load_dotenv
-load_dotenv()
+from pathlib import Path
+
+
 
 def main():
+    print(f"\nStarting Run: {datetime.datetime.now()}\n")
     args = parse()
     stores = load_store_info()
     results = check_appointments(stores,shot_number=args.shot)
     messenger = Messenger()
-    print(f"\nStarting Run: {datetime.datetime.now()}\n")
+
+    available_count = 0
     for store in results:
         if results[store]:
-            print(f"\t#{store}: AVAILABLE")
+            print(f"\t{store}: AVAILABLE")
             messenger.notify_availability(store)
+            available_count+=1
         else:
-            print(f"\t#{store}: No Availabilities")
+            print(f"\t{store}: No Availabilities")
+    
+    if(available_count == 0):
+        print('Sorry, nothing found.')
+        
+    print('###### PROGRAM END ######')
 
+def message_test():
+    messenger = Messenger()
+    messenger.notify_availability("TEST")
 
 def parse():
     parser = argparse.ArgumentParser()
